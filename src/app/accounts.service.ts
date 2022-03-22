@@ -1,26 +1,33 @@
+import { Injectable } from "@angular/core";
+import { LoggingService } from "./logging.service";
+
+@Injectable()
 export class AccountsService {
+    
     accounts = [
         {
-          name: 'Master Account',
-          status: 'active'
+            name: "Master Account",
+            status: "active",
         },
         {
-          name: 'Testaccount',
-          status: 'inactive'
+            name: "Testaccount",
+            status: "inactive",
         },
         {
-          name: 'Hidden Account',
-          status: 'unknown'
-        }
-      ];
+            name: "Hidden Account",
+            status: "unknown",
+        },
+    ];
 
-      addAccount(name: string, status: string) {
-          this.accounts.push({ name, status });
-          console.log(this.accounts);
-          
-      }
+    constructor(private _loggingService: LoggingService) {}
 
-      updateStatus(id: number, status: string) {
+    addAccount(name: string, status: string) {
+        this.accounts.push({ name, status });
+        this._loggingService.logStatusChange(status);
+    }
+
+    updateStatus(id: number, status: string) {
         this.accounts[id].status = status;
-      }
+        this._loggingService.logStatusChange(status);
+    }
 }
